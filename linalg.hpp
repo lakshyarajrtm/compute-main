@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 
 namespace Compute{
@@ -49,6 +50,20 @@ class Matrix {
             return out;
         }
 
+        Matrix operator-(const Matrix& m){
+            return *this + (-1 * m);
+        }
+
+        void exp(int value){
+            Matrix& out = *this;
+            for(auto& row: out.data){
+                for(auto& elem: row){
+                    elem = pow(elem, value);
+                }
+            }
+        }
+
+
         Matrix operator*(const T& value) const{
             Matrix out = *this;
             for(auto& row : out.data){
@@ -57,6 +72,16 @@ class Matrix {
                 }
             }
             return out;
+        }
+
+        friend std::ostream& operator<<(std::ostream& stream, const Matrix& m){
+            for(auto& row: m.data){
+                for(auto& elem: row){
+                    stream << elem << " ";
+                }
+                stream << std::endl;
+            }
+            return stream;
         }
 
         friend Matrix operator*(const T& value,const Matrix& m){
