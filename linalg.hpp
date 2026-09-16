@@ -39,21 +39,38 @@ class Matrix {
 
         T det(){
             if(rows != cols){
-                throw runtime_error("Matrix is not invertible");
+                throw std::runtime_error("Matrix is not invertible");
             }
             T determinant = T();
-            
+            int n = rows;
+            Matrix& m = *this;
+            if(n == 1){
+                return m[0][0];
+            }
+
+            if(n == 2){
+                return m[0][0] * m[1][1] - m[0][1] * m[1][0];
+            }
+            int sign = 1;
             for(int i = 0; i < cols; i++){
+                
                 Matrix cofactor = Matrix(rows-1, cols-1);
                 for(int j=1; j < rows; j++){
+                    int l;
                     for(int k=0; k < cols; k++){
                         if(i == k) continue;
-                        cofactor[j][k] += *this[]
+                        if(k>i) l = k-1;
+                        else l = k;
+                        cofactor[j-1][l] = m[j][k];
                     }
+                    
 
                 }
+                determinant += sign * m[0][i] * cofactor.det();
+                sign *= -1;
 
             }
+            return determinant;
             
         }
         
