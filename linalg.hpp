@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <stdexcept>
 
 
 namespace Compute{
@@ -32,6 +33,31 @@ class Matrix {
             }
         }
 
+        void set(int r, int c, const T& val) {
+            data[r][c] = val;
+        }
+
+        T det(){
+            if(rows != cols){
+                throw runtime_error("Matrix is not invertible");
+            }
+            T determinant = T();
+            
+            for(int i = 0; i < cols; i++){
+                Matrix cofactor = Matrix(rows-1, cols-1);
+                for(int j=1; j < rows; j++){
+                    for(int k=0; k < cols; k++){
+                        if(i == k) continue;
+                        cofactor[j][k] += *this[]
+                    }
+
+                }
+
+            }
+            
+        }
+        
+
         const std::vector<T>& operator[](int index) const {
             return data[index];
         }
@@ -62,7 +88,6 @@ class Matrix {
                 }
             }
         }
-
 
         Matrix operator*(const T& value) const{
             Matrix out = *this;
