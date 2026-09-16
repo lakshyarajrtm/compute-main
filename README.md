@@ -32,7 +32,7 @@ int main() {
     auto y = x + -2.2f * x;
     
     // Print the result
-    y.print();
+    std::cout << y << std::endl;
 
     return 0;
 }
